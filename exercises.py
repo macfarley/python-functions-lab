@@ -8,10 +8,12 @@
 # calculate_area_triangle(7, 3) should return 10.5.
 #
 # Define your function and call it below.
+def calculate_area_triangle(base: int, height: int) -> float:  # type hinting notation
+    return (base * height) / 2
 
 
-
-print('Exercise 1:', calculate_area_triangle(10, 5))
+print('Exercise 1:', calculate_area_triangle(10, 5)) #expected 25.0
+# print('Exercise 1:', calculate_area_triangle(7, 3)) #expected 10.5
 
 # Exercise 2: Calculate Simple Interest
 #
@@ -23,11 +25,12 @@ print('Exercise 1:', calculate_area_triangle(10, 5))
 # simple_interest(1500, 3.5, 5) should return 262.5.
 #
 # Define your function and call it to see the result.
+def simple_interest(principal: float, rate: float, time: int) -> float:
+    return (principal * rate * time) / 100
 
 
-
-print('Exercise 2:', simple_interest(1000, 5, 2))
-
+print('Exercise 2:', simple_interest(1000, 5, 2)) #expect 100
+# print('Exercise 2:', simple_interest(1500, 3.5, 5)) #expect 262.5
 # Exercise 3: Apply a Discount
 #
 # Write a function named `apply_discount` that takes a product's price and a discount percentage (from 0 to 100).
@@ -38,10 +41,12 @@ print('Exercise 2:', simple_interest(1000, 5, 2))
 # apply_discount(80, 10) should return 72.
 #
 # Define your function and call it to display the discounted price.
-
-
+def apply_discount(price: float, discount: int) -> float:
+    savings = (price * discount/100)
+    return price-savings
 
 print('Exercise 3:', apply_discount(100, 25))
+# print(apply_discount(80, 10)) #expect 72
 
 # Exercise 4: Convert Temperature
 #
@@ -56,11 +61,21 @@ print('Exercise 3:', apply_discount(100, 25))
 # convert_temperature(32, 'F') should return 0.0.
 #
 # Define the function and then call it below.
-
+def convert_temperature(temperature: float, unit: str) -> float:
+    unit = unit.upper()
+    if unit not in ('C', 'F'):
+        raise ValueError('Converter does not support that unit, use F for Fahrenheit or C for Celsius')
+    elif unit == 'C':
+        return (temperature * 9/5) + 32
+    else: #default, only F remains
+        return (temperature - 32) * 5/9
 
 
 print('Exercise 4: Convert 0°C to Fahrenheit:', convert_temperature(0, 'C'))
 print('Exercise 4: Convert 32°F to Celsius:', convert_temperature(32, 'F'))
+# print(convert_temperature(35, "C")) #expect 95
+# print(convert_temperature(273, 'K')) #expect Error
+# print(convert_temperature(104, 'f')) #expect 40
 
 # Exercise 5: Sum to N
 #
@@ -71,10 +86,19 @@ print('Exercise 4: Convert 32°F to Celsius:', convert_temperature(32, 'F'))
 # sum_to(10) should return 55.
 #
 # Define the function and then call it below.
+def sum_to(n: int) -> int:
+    # return (n/2)*(n+1) #this is known (to google) mathmatical formula, easier to run it than loops
+    i = n-1
+    total = n #starts with itself
+    while i >= 1:
+        total += i #add the next smallest
+        i -= 1 #shrink the increment
+    return total #after the loop breaks
 
 
-
-print('Exercise 5:', sum_to(6))
+print('Exercise 5:', sum_to(6)) #expect 21
+# print(sum_to(10)) #expect 55
+# print(sum_to(99)) #expect 4950
 
 
 # Exercise 6: Find the Largest Number
@@ -87,10 +111,16 @@ print('Exercise 5:', sum_to(6))
 #
 # Define your function and test it with different inputs.
 
-
+def largest(a: float, b: float, c:float) -> float:
+    if a >= b and a >= c:
+        return a
+    elif b >= a and b >= c:
+        return b
+    else: #if neither a or b is largest it must be
+        return c
 
 print('Exercise 6:', largest(1, 2, 3))
-
+# print(largest(-100, 42, 3.14 )) #expect 42
 
 # Exercise 7: Calculate a Tip
 #
@@ -101,11 +131,12 @@ print('Exercise 6:', largest(1, 2, 3))
 # calculate_tip(50, 20) should return 10.
 #
 # Write your function and test its output below.
+def calculate_tip(subtotal:float , tip: int) ->float:
+    return subtotal * (tip/100)
 
 
-
-print('Exercise 7:', calculate_tip(50, 20))
-
+print('Exercise 7:', calculate_tip(50, 20)) #expect 10
+print(calculate_tip(456, 18))
 
 # Exercise 8: Calculate Product of Numbers
 #
@@ -117,10 +148,16 @@ print('Exercise 7:', calculate_tip(50, 20))
 # product(2, 5, 5) should return 50.
 #
 # Define the function and call it with different sets of numbers to test.
+def product(*args: int)->int:
+    total = 1 #even if there's only 1 arg it will be equal to itself
+    for num in args:
+        total = total*num
+    return total
 
 
-
-print('Exercise 8:', product(2, 5, 5))
+print('Exercise 8:', product(2, 5, 5)) #expect 50
+# print(product(4,4,4)) #expect 64
+# print(product(10, 10, 10, 10, 10, 25)) #2,500,000 but all together
 
 
 # Exercise 9: Basic Calculator
@@ -137,9 +174,19 @@ print('Exercise 8:', product(2, 5, 5))
 # basic_calculator(10, 5, 'divide') should return 2.
 #
 # Define the function and then call it below.
-
+def basic_calculator(a: int, b: int, operator: str)-> int:
+    if operator not in ('subtract', 'add', 'multipy', 'divide'):
+        raise ValueError ("this calculator can't do that don't break me")
+    elif operator == 'add':
+        return a+b
+    elif operator == 'subtract':
+        return a-b
+    elif operator == 'multipy':
+        return a*b
+    else: #last possible
+        return a/b
 
 
 print('Exercise 9 Result:', basic_calculator(10, 5, "subtract"))
-
-
+print(basic_calculator(144, 12, 'divide')) #expect 12
+print(basic_calculator(100, 2, 'root')) #expect error
