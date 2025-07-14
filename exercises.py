@@ -175,13 +175,13 @@ print('Exercise 8:', product(2, 5, 5)) #expect 50
 #
 # Define the function and then call it below.
 def basic_calculator(a: int, b: int, operator: str)-> int:
-    if operator not in ('subtract', 'add', 'multipy', 'divide'):
+    if operator not in ('subtract', 'add', 'multiply', 'divide'):
         raise ValueError ("this calculator can't do that don't break me")
     elif operator == 'add':
         return a+b
     elif operator == 'subtract':
         return a-b
-    elif operator == 'multipy':
+    elif operator == 'multiply':
         return a*b
     else: #last possible
         return a/b
