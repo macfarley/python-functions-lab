@@ -111,7 +111,17 @@ print('Exercise 5:', sum_to(6)) #expect 21
 #
 # Define your function and test it with different inputs.
 
+#utility function to check for duplicate arguments, no arguments
+def all_equal(*args: int) -> bool:
+    if len(args) == 0:
+        raise ValueError("At least one number must be provided")
+    # the set function is built-in Python, checks for duplicates and returns number of different items
+    return len(set(args)) == 1
+
 def largest(a: float, b: float, c:float) -> float:
+    # If all numbers are equal, return any of them
+    if all_equal(a, b, c):
+        return a  
     if a >= b and a >= c:
         return a
     elif b >= a and b >= c:
@@ -119,8 +129,18 @@ def largest(a: float, b: float, c:float) -> float:
     else: #if neither a or b is largest it must be
         return c
 
+'''# alternative solution for more numbers:
+def largest_better(*args: int) -> int:
+    if all_equal(*args):
+        return args[0]
+    # the max function is vanilla Python too. finds the largest number in a list/tuple
+    return max(args)'''
+
 print('Exercise 6:', largest(1, 2, 3))
-# print(largest(-100, 42, 3.14 )) #expect 42
+# test_numbers = [10, 4, 2, 10, 10, 10, 10, 10, 456, 22, 99, 102, 456]
+# print('Exercise 6:', largest_better(*test_numbers))
+
+
 
 # Exercise 7: Calculate a Tip
 #
@@ -137,6 +157,33 @@ def calculate_tip(subtotal:float , tip: int) ->float:
 
 print('Exercise 7:', calculate_tip(50, 20)) #expect 10
 print(calculate_tip(456, 18))
+
+'''# a more common example i would do in a restaurant: determine the total bill including tip, round to an even dollar adjusting tip if necessary.
+# subtotal from the bill, tip range is named for bad (10-15%), good(15-20%), or great service (20-25%)
+# user could adjust the ranges depending how generous they are in general.
+def fair_tip(subtotal: float, tip_range: str) -> int:
+    if tip_range == "bad":
+        tip = calculate_tip(subtotal, 12.5)  # average of 10-15%
+    elif tip_range == "good":
+        tip = calculate_tip(subtotal, 17.5)  # average of 15-20%
+    elif tip_range == "great":
+        tip = calculate_tip(subtotal, 22.5)  # average of 20-25%
+    else:
+        raise ValueError("Invalid tip range")
+
+    total = round(subtotal + tip)
+    tip_percentage = (tip / subtotal) * 100
+    # round up to the next dollar if tip is less than 10%
+    if tip_percentage < 10:
+        total += 1
+        final_tip_percentage = total / 100
+
+    return f"Total fair bill: {total}, you left {final_tip_percentage}% tip."
+print('Fair Tip Example:', fair_tip(98, 'great')) 
+#expect "Total fair bill: 121, you left 22.5% tip."
+print('Fair Tip Example:', fair_tip(45, 'bad'))  
+# expect "Total fair bill: 50, you left 12.5% tip."'''
+
 
 # Exercise 8: Calculate Product of Numbers
 #
@@ -174,7 +221,7 @@ print('Exercise 8:', product(2, 5, 5)) #expect 50
 # basic_calculator(10, 5, 'divide') should return 2.
 #
 # Define the function and then call it below.
-def basic_calculator(a: int, b: int, operator: str)-> int:
+def basic_calculator(a: int, b: int, operator: str)-> float:
     if operator not in ('subtract', 'add', 'multiply', 'divide'):
         raise ValueError ("this calculator can't do that don't break me")
     elif operator == 'add':
